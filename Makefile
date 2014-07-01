@@ -16,8 +16,8 @@ papers : ordering $(PAPERS)
 
 
 $(PDF) : papers $(TEX)
-	pdflatex -halt-on-error $(TEX)
-	pdflatex -halt-on-error $(TEX)
+	xelatex -halt-on-error $(TEX)
+	xelatex -halt-on-error $(TEX)
 
 clean :
 	rm -f *.aux *.log *.nav *.out *.ptb *.toc *.snm $(PDF) $(TEX) *.synctex.gz *.bbl *.blg
