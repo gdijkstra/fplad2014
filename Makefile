@@ -1,7 +1,11 @@
-TEX=proceedings.tex
-PDF=$(subst .tex,.pdf,$(TEX))
+TEXPROCEEDINGS=proceedings.tex
+PDFPROCEEDINGS=$(subst .tex,.pdf,$(TEXPROCEEDINGS))
+TEXFRONTPAGE=frontpage.tex
+PDFFRONTPAGE=$(subst .tex,.pdf,$(TEXFRONTPAGE))
 PAPERS=$(shell sed -e 's/^/submissions\//' -e 's/\#.*//' ordering | tr '\n' ' ')
-default : $(PDF)
+default : all
+
+all : $(PDFFRONTPAGE) $(PDFPROCEEDINGS)
 
 # Skim on OS X, zathura elsewhere.
 preview : $(PDF)
@@ -14,10 +18,12 @@ preview : $(PDF)
 papers : ordering $(PAPERS)
 	gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=papers.pdf $(PAPERS)
 
+$(PDFFRONTPAGE) : $(TEXFRONTPAGE)
+	xelatex -halt-on-error $(TEXFRONTPAGE)
 
-$(PDF) : papers $(TEX)
-	xelatex -halt-on-error $(TEX)
-	xelatex -halt-on-error $(TEX)
+$(PDFPROCEEDINGS) : papers $(TEXPROCEEDINGS)
+	xelatex -halt-on-error $(TEXPROCEEDINGS)
+	xelatex -halt-on-error $(TEXPROCEEDINGS)
 
 clean :
-	rm -f *.aux *.log *.nav *.out *.ptb *.toc *.snm $(PDF) $(TEX) *.synctex.gz *.bbl *.blg
+	rm -f *.aux *.log *.nav *.out *.ptb *.toc *.snm $(PDFPROCEEDINGS) $(PDFFRONTPAGE) *.synctex.gz *.bbl *.blg
