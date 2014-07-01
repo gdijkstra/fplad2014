@@ -16,7 +16,7 @@ preview : $(PDF)
 	fi
 
 papers : ordering $(PAPERS)
-	gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=papers.pdf $(PAPERS)
+	#gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=papers.pdf $(PAPERS)
 
 $(PDFFRONTPAGE) : $(TEXFRONTPAGE)
 	xelatex -halt-on-error $(TEXFRONTPAGE)
